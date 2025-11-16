@@ -80,7 +80,7 @@ public class Viva1Q3 {
             System.out.println("Code " + codes[i] + " → Decimal " + decimals[i] + " → " + teams[i]);
         }
 
-        // Calculate averages
+        // Calculate averages(ternary operator)
         double ironAvg = (ironCount > 0) ? ironTotal / ironCount : 0;
         double capAvg = (capCount > 0) ? capTotal / capCount : 0;
 
