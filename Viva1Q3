@@ -1,0 +1,93 @@
+import java.util.Scanner;
+
+public class Viva1Q3 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter binary code (type 'STOP' to finish):");
+
+        String[] codes = new String[20];      // store binary codes
+        int[] decimals = new int[20];         // store decimal values
+        String[] teams = new String[20];      // store team names
+
+        int count = 0;                         // number of codes entered
+        int ironCount = 0, capCount = 0;
+        int ironTotal = 0, capTotal = 0;
+
+        // ------------ INPUT PHASE ---------------
+        while (count < 20) {
+            String code = sc.nextLine();
+
+            if (code.equalsIgnoreCase("STOP")) {
+                break;
+            }
+
+            // Validate length
+            if (code.length() != 4) {
+                System.out.println("Invalid code: must be exactly 4 digits");
+                continue;
+            }
+
+            // Validate binary digits
+            boolean valid = true;
+            for (int i = 0; i <=3; i++) {
+                char c = code.charAt(i);
+                if (c != '0' && c != '1') {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (!valid) {
+                System.out.println("Invalid code: must contain only 0s and 1s");
+                continue;
+            }
+
+            // Convert binary to decimal manually
+            int decimal = 0;
+            int value = 1;
+            for (int i = 3; i >= 0; i--) {
+                int bit = code.charAt(i) - '0';
+                decimal += bit * value;
+                value *= 2;
+            }
+
+            // Determine team
+            String team;
+            if (decimal % 2 == 0) {
+                team = "Iron Man’s Team";
+                ironCount++;
+                ironTotal += decimal;
+            } else {
+                team = "Captain America’s Team";
+                capCount++;
+                capTotal += decimal;
+            }
+
+            // Store in arrays
+            codes[count] = code;
+            decimals[count] = decimal;
+            teams[count] = team;
+            count++;
+        }
+
+        // ------------ OUTPUT PHASE ---------------
+        System.out.println();
+
+        for (int i = 0; i < count; i++) {
+            System.out.println("Code " + codes[i] + " → Decimal " + decimals[i] + " → " + teams[i]);
+        }
+
+        // Calculate averages
+        double ironAvg = (ironCount > 0) ? ironTotal / ironCount : 0;
+        double capAvg = (capCount > 0) ? capTotal / capCount : 0;
+
+        System.out.println();
+        System.out.println("Iron Man Team: " + ironCount + " codes | Average Power: " + ironAvg);
+        System.out.println("Captain America Team: " + capCount + " codes | Average Power: " + capAvg);
+        System.out.println("Mission Accomplished: Message Decrypted!");
+    }
+}
+
